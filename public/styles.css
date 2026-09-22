@@ -1,0 +1,280 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@500;700&display=swap');
+
+:root {
+  --bg0: #fff7f2;
+  --bg1: #ffe8e0;
+  --card: rgba(255, 255, 255, 0.86);
+  --ink: #2a1f1a;
+  --muted: #7a655c;
+  --line: rgba(180, 80, 60, 0.14);
+  --red: #c62828;
+  --red-deep: #8e1b1b;
+  --gold: #c9a227;
+  --shadow: 0 18px 50px rgba(120, 40, 30, 0.12);
+  --radius: 22px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  color: var(--ink);
+  font-family: "Noto Sans JP", system-ui, sans-serif;
+  background:
+    radial-gradient(ellipse 80% 50% at 10% -10%, #ffd4c8 0%, transparent 55%),
+    radial-gradient(ellipse 70% 45% at 100% 0%, #ffe9b8 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 50% 110%, #ffcfc7 0%, transparent 55%),
+    linear-gradient(165deg, var(--bg0), var(--bg1));
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(201, 162, 39, 0.35) 0 2px, transparent 3px),
+    radial-gradient(circle at 78% 22%, rgba(198, 40, 40, 0.28) 0 2px, transparent 3px),
+    radial-gradient(circle at 34% 72%, rgba(201, 162, 39, 0.3) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 88% 68%, rgba(198, 40, 40, 0.22) 0 2px, transparent 3px);
+  z-index: 0;
+}
+
+#app {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 20px 16px 56px;
+}
+
+.pixel-panel, .card {
+  background: var(--card);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px;
+  margin-bottom: 14px;
+}
+
+.hero {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.badge {
+  width: 88px;
+  height: 88px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 30%, #fff6e8, transparent 45%),
+    linear-gradient(145deg, #e53935, #8e1b1b);
+  border: 3px solid var(--gold);
+  box-shadow: 0 8px 24px rgba(198, 40, 40, 0.28), inset 0 0 0 2px rgba(255,255,255,0.25);
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-family: "Shippori Mincho", serif;
+  font-weight: 700;
+  font-size: 1.55rem;
+  letter-spacing: 0.08em;
+  position: relative;
+}
+
+.badge small {
+  position: absolute;
+  bottom: 10px;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  opacity: 0.9;
+  font-family: "Noto Sans JP", sans-serif;
+  font-weight: 500;
+}
+
+.hero-text h1 {
+  margin: 0 0 8px;
+  font-family: "Shippori Mincho", serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--red-deep);
+  letter-spacing: 0.04em;
+  line-height: 1.35;
+}
+
+.hero-text p {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(201,162,39,0.2), rgba(198,40,40,0.12));
+  color: var(--red-deep);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+
+.btn {
+  display: inline-block;
+  width: 100%;
+  padding: 15px 16px;
+  margin: 6px 0;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #f2f0ed, #ebe4de);
+  color: var(--ink);
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 6px 16px rgba(80, 40, 30, 0.08);
+  transition: transform 0.15s ease;
+}
+
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: translateY(1px); }
+
+.btn-primary {
+  background: linear-gradient(135deg, #e53935, #b71c1c);
+  color: #fff;
+  box-shadow: 0 10px 28px rgba(198, 40, 40, 0.28);
+}
+
+.btn-choice {
+  text-align: left;
+  background: #fff;
+  border: 1.5px solid var(--line);
+  border-radius: 16px;
+  margin-bottom: 10px;
+  box-shadow: none;
+  padding: 14px 16px;
+}
+
+.btn-choice.selected {
+  border-color: var(--gold);
+  background: linear-gradient(135deg, #fff8e7, #ffe8e0);
+  box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.22);
+}
+
+.btn-ghost, .admin-link-wrap a {
+  display: inline-block;
+  width: auto;
+  padding: 8px 12px;
+  font-size: 0.78rem;
+  opacity: 0.7;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  box-shadow: none;
+  color: var(--muted);
+  text-decoration: none;
+  cursor: pointer;
+  font: inherit;
+}
+
+.question-label {
+  color: var(--gold);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin-bottom: 8px;
+}
+
+.question-text {
+  font-family: "Shippori Mincho", serif;
+  font-size: 1.2rem;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  color: var(--ink);
+}
+
+.tally-row {
+  display: grid;
+  grid-template-columns: minmax(88px, 1.3fr) 1fr 40px;
+  gap: 10px;
+  align-items: center;
+  margin: 12px 0;
+  font-size: 0.92rem;
+}
+
+.tally-label { line-height: 1.35; word-break: break-word; }
+
+.bar-track {
+  height: 12px;
+  background: rgba(120, 60, 40, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #e53935, #c9a227);
+  width: 0%;
+  border-radius: 999px;
+  transition: width 0.45s ease;
+}
+
+.bar-fill.b { background: linear-gradient(90deg, #ef6c00, #c9a227); }
+.bar-fill.c { background: linear-gradient(90deg, #c9a227, #f3e2a0); }
+.bar-fill.d { background: linear-gradient(90deg, #ad1457, #e57373); }
+
+.muted { color: var(--muted); font-size: 0.88rem; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.admin-link-wrap { text-align: right; margin-top: 10px; }
+.qr-hint {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  word-break: break-all;
+  color: var(--muted);
+  background: rgba(255,255,255,0.5);
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+
+input, textarea, select {
+  width: 100%;
+  margin: 4px 0 12px;
+  padding: 12px 14px;
+  font: inherit;
+  background: #fff;
+  color: var(--ink);
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
+}
+
+label {
+  font-size: 0.82rem;
+  color: var(--red-deep);
+  font-weight: 500;
+  display: block;
+}
+
+.footer-note {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.75rem;
+  margin-top: 8px;
+  letter-spacing: 0.08em;
+}
+
+@media (min-width: 600px) {
+  #app { padding: 28px 20px 64px; }
+  .hero-text h1 { font-size: 1.65rem; }
+  .question-text { font-size: 1.35rem; }
+}
