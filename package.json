@@ -1,0 +1,9 @@
+{
+  "name": "ken-quiz",
+  "version": "1.0.0",
+  "private": true,
+  "description": "還暦お祝い なぞなぞパーティー",
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0"
+  }
+}
