@@ -3,7 +3,7 @@
 :root {
   --bg0: #fff7f2;
   --bg1: #ffe8e0;
-  --card: rgba(255, 255, 255, 0.86);
+  --card: rgba(255, 255, 255, 0.88);
   --ink: #2a1f1a;
   --muted: #7a655c;
   --line: rgba(180, 80, 60, 0.14);
@@ -33,9 +33,9 @@ body::before {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  opacity: 0.35;
+  opacity: 0.32;
   background-image:
-    radial-gradient(circle at 12% 18%, rgba(201, 162, 39, 0.35) 0 2px, transparent 3px),
+    radial-gradient(circle at 12% 18%, rgba(201, 162, 39, 0.4) 0 2px, transparent 3px),
     radial-gradient(circle at 78% 22%, rgba(198, 40, 40, 0.28) 0 2px, transparent 3px),
     radial-gradient(circle at 34% 72%, rgba(201, 162, 39, 0.3) 0 1.5px, transparent 2.5px),
     radial-gradient(circle at 88% 68%, rgba(198, 40, 40, 0.22) 0 2px, transparent 3px);
@@ -50,7 +50,7 @@ body::before {
   padding: 20px 16px 56px;
 }
 
-.pixel-panel, .card {
+.card {
   background: var(--card);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -61,43 +61,8 @@ body::before {
   margin-bottom: 14px;
 }
 
-.hero {
-  display: flex;
-  gap: 16px;
-  align-items: center;
-}
-
-.badge {
-  width: 88px;
-  height: 88px;
-  flex-shrink: 0;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 35% 30%, #fff6e8, transparent 45%),
-    linear-gradient(145deg, #e53935, #8e1b1b);
-  border: 3px solid var(--gold);
-  box-shadow: 0 8px 24px rgba(198, 40, 40, 0.28), inset 0 0 0 2px rgba(255,255,255,0.25);
-  display: grid;
-  place-items: center;
-  color: #fff;
-  font-family: "Shippori Mincho", serif;
-  font-weight: 700;
-  font-size: 1.55rem;
-  letter-spacing: 0.08em;
-  position: relative;
-}
-
-.badge small {
-  position: absolute;
-  bottom: 10px;
-  font-size: 0.62rem;
-  letter-spacing: 0.18em;
-  opacity: 0.9;
-  font-family: "Noto Sans JP", sans-serif;
-  font-weight: 500;
-}
-
-.hero-text h1 {
+.title-card .page-title,
+.page-title {
   margin: 0 0 8px;
   font-family: "Shippori Mincho", serif;
   font-size: 1.35rem;
@@ -107,7 +72,7 @@ body::before {
   line-height: 1.35;
 }
 
-.hero-text p {
+.page-sub {
   margin: 0;
   font-size: 0.92rem;
   line-height: 1.65;
@@ -144,16 +109,30 @@ body::before {
   text-align: center;
   text-decoration: none;
   box-shadow: 0 6px 16px rgba(80, 40, 30, 0.08);
-  transition: transform 0.15s ease;
+  transition: transform 0.15s ease, opacity 0.15s ease;
 }
 
 .btn:hover { transform: translateY(-1px); }
 .btn:active { transform: translateY(1px); }
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
 
 .btn-primary {
   background: linear-gradient(135deg, #e53935, #b71c1c);
   color: #fff;
   box-shadow: 0 10px 28px rgba(198, 40, 40, 0.28);
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, #e0b93a, #c62828);
+  color: #fff;
+  box-shadow: 0 10px 28px rgba(201, 162, 39, 0.35);
+  font-family: "Shippori Mincho", serif;
+  font-weight: 700;
+  letter-spacing: 0.06em;
 }
 
 .btn-choice {
@@ -177,13 +156,26 @@ body::before {
   width: auto;
   padding: 8px 12px;
   font-size: 0.78rem;
-  opacity: 0.7;
+  opacity: 0.75;
   background: transparent;
   border: 1px solid var(--line);
   border-radius: 999px;
   box-shadow: none;
   color: var(--muted);
   text-decoration: none;
+  cursor: pointer;
+  font: inherit;
+}
+
+.btn-danger-ghost {
+  display: inline-block;
+  width: auto;
+  padding: 8px 12px;
+  font-size: 0.78rem;
+  background: rgba(198, 40, 40, 0.08);
+  border: 1px solid rgba(198, 40, 40, 0.35);
+  border-radius: 999px;
+  color: var(--red-deep);
   cursor: pointer;
   font: inherit;
 }
@@ -235,7 +227,6 @@ body::before {
 .bar-fill.d { background: linear-gradient(90deg, #ad1457, #e57373); }
 
 .muted { color: var(--muted); font-size: 0.88rem; }
-.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 .admin-link-wrap { text-align: right; margin-top: 10px; }
 .qr-hint {
   margin-top: 10px;
@@ -273,8 +264,231 @@ label {
   letter-spacing: 0.08em;
 }
 
+/* Photo marquee */
+.marquee-wrap {
+  overflow: hidden;
+  border-radius: var(--radius);
+  margin-bottom: 14px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.65);
+  box-shadow: var(--shadow);
+  height: 132px;
+  position: relative;
+}
+
+.marquee-empty {
+  display: grid;
+  place-items: center;
+}
+
+.marquee-placeholder {
+  color: var(--muted);
+  font-size: 0.92rem;
+  letter-spacing: 0.04em;
+}
+
+.marquee-track {
+  display: flex;
+  flex-direction: row;
+  width: max-content;
+  height: 100%;
+  animation: marquee-scroll 28s linear infinite;
+}
+
+.marquee-item {
+  flex: 0 0 auto;
+  height: 100%;
+  padding: 8px 4px;
+}
+
+.marquee-item img {
+  height: 100%;
+  width: auto;
+  max-width: 220px;
+  object-fit: cover;
+  border-radius: 14px;
+  display: block;
+  border: 2px solid rgba(201, 162, 39, 0.45);
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Admin */
+.admin-q-row {
+  margin: 8px 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.admin-q-text { flex: 1; min-width: 140px; }
+
+.admin-actions {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.photo-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.photo-thumb {
+  position: relative;
+  width: 88px;
+  height: 88px;
+}
+
+.photo-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+}
+
+.photo-thumb button {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: none;
+  background: var(--red);
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+/* Reveal overlay */
+.reveal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  padding: 24px 16px;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(201,162,39,0.45), transparent 40%),
+    radial-gradient(circle at 80% 30%, rgba(198,40,40,0.5), transparent 45%),
+    linear-gradient(160deg, rgba(142,27,27,0.92), rgba(80,20,20,0.94));
+  overflow: hidden;
+}
+
+.reveal-card {
+  position: relative;
+  z-index: 2;
+  max-width: 560px;
+  width: 100%;
+  text-align: center;
+  color: #fff8e7;
+  padding: 28px 22px;
+  border-radius: 28px;
+  border: 2px solid rgba(243, 226, 160, 0.65);
+  background: linear-gradient(145deg, rgba(255,255,255,0.12), rgba(0,0,0,0.12));
+  box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+  animation: reveal-pop 0.55s ease;
+}
+
+@keyframes reveal-pop {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.reveal-label {
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  color: #f3e2a0;
+  margin-bottom: 10px;
+}
+
+.reveal-answer {
+  font-family: "Shippori Mincho", serif;
+  font-size: clamp(1.8rem, 7vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1.3;
+  text-shadow: 0 4px 18px rgba(0,0,0,0.35);
+}
+
+.reveal-answer span {
+  color: #ffd54f;
+  font-size: 1.15em;
+}
+
+.reveal-choice {
+  margin-top: 10px;
+  font-size: 1.05rem;
+  opacity: 0.95;
+}
+
+.reveal-winners-label {
+  margin-top: 22px;
+  font-family: "Shippori Mincho", serif;
+  font-size: 1.15rem;
+  color: #f3e2a0;
+}
+
+.winner-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.winner-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ffd54f, #ffe082);
+  color: #6a1b1b;
+  font-family: "Shippori Mincho", serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}
+
+.confetti-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: -12px;
+  width: 10px;
+  height: 16px;
+  border-radius: 2px;
+  opacity: 0.95;
+  animation-name: confetti-fall;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes confetti-fall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0.85; }
+}
+
 @media (min-width: 600px) {
   #app { padding: 28px 20px 64px; }
-  .hero-text h1 { font-size: 1.65rem; }
+  .page-title { font-size: 1.65rem; }
   .question-text { font-size: 1.35rem; }
+  .marquee-wrap { height: 160px; }
 }
+
+/* build 2026-09-22T09:55:00+09:00 */
